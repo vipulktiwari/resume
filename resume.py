@@ -7,7 +7,9 @@ from docx.oxml import OxmlElement
 OUTPUT_PATH = "VipulKumarTiwari.docx"
 
 # ── Color palette ─────────────────────────────────────────────────────────────
-HEADER_BG   = "1B2631"                       # dark navy
+#HEADER_BG   = "1B2631"                       # dark navy
+HEADER_BG   = "FFFFFF"                       # dark navy
+HEADER_FONT = RGBColor(0x1B, 0x26, 0x31)
 ACCENT      = RGBColor(0x21, 0x8B, 0xC2)    # steel blue
 WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
 NEAR_BLACK  = RGBColor(0x1A, 0x1A, 0x1A)
@@ -78,14 +80,20 @@ def add_section_header(container, text, accent=False):
 
 
 def add_bullet(container, text, size=8.5):
+    import re
     p = container.add_paragraph(style='List Bullet')
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after  = Pt(2)
     p.paragraph_format.left_indent  = Inches(0.18)
-    run = p.add_run(text)
-    run.font.name = "Calibri"
-    run.font.size = Pt(size)
-    run.font.color.rgb = NEAR_BLACK
+    for part, is_bold in re.findall(r'\*\*(.+?)\*\*|([^*]+)', text):
+        segment = part if part else is_bold
+        if not segment:
+            continue
+        run = p.add_run(segment)
+        run.bold = bool(part)
+        run.font.name = "Calibri"
+        run.font.size = Pt(size)
+        run.font.color.rgb = NEAR_BLACK
 
 
 def add_job_header(container, title, company, date, location):
@@ -159,28 +167,28 @@ _remove_default_para(hdr_cell)
 
 # Name
 p_name = hdr_cell.add_paragraph()
-p_name.alignment = WD_ALIGN_PARAGRAPH.CENTER
-p_name.paragraph_format.space_before = Pt(0)
-p_name.paragraph_format.space_after  = Pt(4)
-r = p_name.add_run("VIPUL KUMAR TIWARI")
-r.bold = True; r.font.name = "Calibri"; r.font.size = Pt(24); r.font.color.rgb = WHITE
+p_name.alignment = WD_ALIGN_PARAGRAPH.LEFT
+p_name.paragraph_format.space_before = Pt(2)
+p_name.paragraph_format.space_after  = Pt(2)
+r = p_name.add_run("Vipul Kumar Tiwari")
+r.bold = True; r.font.name = "Calibri"; r.font.size = Pt(24); r.font.color.rgb = HEADER_FONT
 
 # Title
 p_title = hdr_cell.add_paragraph()
-p_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+p_title.alignment = WD_ALIGN_PARAGRAPH.LEFT
 p_title.paragraph_format.space_before = Pt(0)
-p_title.paragraph_format.space_after  = Pt(6)
+p_title.paragraph_format.space_after  = Pt(3)
 r2 = p_title.add_run("Principal Member of Technical Staff")
-r2.font.name = "Calibri"; r2.font.size = Pt(12); r2.font.color.rgb = ACCENT
+r2.font.name = "Calibri"; r2.font.size = Pt(12); r2.font.color.rgb = HEADER_FONT
 
 # Contact line
 p_contact = hdr_cell.add_paragraph()
-p_contact.alignment = WD_ALIGN_PARAGRAPH.CENTER
+p_contact.alignment = WD_ALIGN_PARAGRAPH.LEFT
 p_contact.paragraph_format.space_before = Pt(0)
 p_contact.paragraph_format.space_after  = Pt(0)
 contact_text = "+91-8839814859   \u2022   er.vktcs@gmail.com   \u2022   linkedin.com/in/vipulkumartiwari"
 r3 = p_contact.add_run(contact_text)
-r3.font.name = "Calibri"; r3.font.size = Pt(9); r3.font.color.rgb = RGBColor(0xCC, 0xDD, 0xEE)
+r3.font.name = "Calibri"; r3.font.size = Pt(9); r3.font.color.rgb = ACCENT 
 
 # ════════════════════════════════════════════════════════════
 # SUMMARY  (full-width single column with separator)
@@ -229,12 +237,12 @@ add_bullet(left, "Responsible for enhancing the LogMiner component in Oracle RDB
 
 add_job_header(left, "Senior Software Developer", "SAP Labs", "07/2020 – 02/2026", "Pune, India")
 add_bullet(left, "Contributed to SAP Adaptive Server Enterprise (high-performance OLTP DB), focusing on kernel-layer enhancements and improving the Job Scheduler subsystem for better performance and reliability.")
-add_bullet(left, "Handled high-priority, business-critical escalations for enterprise SAP ASE customers, leveraging strong expertise in database internals.")
-add_bullet(left, "Designed and developed the Hanaservice Sync Agent, a Python-based microservice on Kubernetes, enabling reliable cross-cluster synchronization of Hanaservice Custom Resources (CRs).")
+add_bullet(left, "Handled high-priority, business-critical escalations for enterprise SAP ASE customers, leveraging **strong expertise in database internals**.")
+add_bullet(left, "Designed and developed the Hanaservice Sync Agent, a **Python-based microservice on Kubernetes**, enabling reliable cross-cluster synchronization of Hanaservice Custom Resources (CRs).")
 add_bullet(left, "Owned end-to-end delivery of cloud-plane services: component testing frameworks, integration/E2E test suites, observability (alerts & monitoring), and customer-facing documentation.")
 
 add_job_header(left, "Staff Software Engineer", "Druva Data Solutions", "03/2018 – 07/2020", "Pune, India")
-add_bullet(left, "Designed and built Quaere, a metadata search microservice, from scratch using AWS DynamoDB and S3, enabling efficient and reliable metadata search at scale.")
+add_bullet(left, "Designed and built Quaere, a metadata search microservice, from scratch using **AWS DynamoDB and S3**, enabling efficient and reliable metadata search at scale.")
 add_bullet(left, "Enhanced mstore, a mail-storage service leveraging Quaere as the underlying storage namespace provider, improving system efficiency and integration.")
 add_bullet(left, "Optimized search performance and reduced COGS by improving underlying architecture and resource utilization.")
 add_bullet(left, "Designed a CI system in Python/Docker enabling automated testing and seamless code integration for Quaere.")
@@ -251,8 +259,8 @@ add_bullet(left, "Delivered multiple Change Requests for T-Mobile US as an MAF/M
 add_section_header(right, "Key Achievements", accent=True)
 add_paragraph(right, "Awards & Recognition", bold=True, size=8.5, space_before=4, space_after=2)
 add_bullet(right, "Multiple on-the-spot awards from SAP ASE customers for exceptional fix delivery, responsiveness, and professionalism.")
-add_bullet(right, "Outstanding Achievement Award at Druva for designing and developing Quaere.")
-add_bullet(right, "All India Rank 2451 with a score of 565 in the GATE (CS).")
+add_bullet(right, "**Outstanding Achievement Award** at Druva for designing and developing Quaere.")
+add_bullet(right, "**All India Rank 2451** with a score of 565 in the GATE (CS).")
 
 # ────────────────────────────────────────────────────────────
 # RIGHT: Skills
