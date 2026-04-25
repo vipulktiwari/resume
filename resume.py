@@ -4,7 +4,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUTPUT_PATH = "VipulKumarTiwari_Resume2.docx"
+OUTPUT_PATH = "VipulKumarTiwari.docx"
 
 # ── Color palette ─────────────────────────────────────────────────────────────
 HEADER_BG   = "1B2631"                       # dark navy
@@ -252,6 +252,7 @@ add_section_header(right, "Key Achievements", accent=True)
 add_paragraph(right, "Awards & Recognition", bold=True, size=8.5, space_before=4, space_after=2)
 add_bullet(right, "Multiple on-the-spot awards from SAP ASE customers for exceptional fix delivery, responsiveness, and professionalism.")
 add_bullet(right, "Outstanding Achievement Award at Druva for designing and developing Quaere.")
+add_bullet(right, "All India Rank 2451 with a score of 565 in the GATE (CS).")
 
 # ────────────────────────────────────────────────────────────
 # RIGHT: Skills
@@ -286,8 +287,13 @@ add_paragraph(right, "CGPA: 8.07 / 10", size=8.5, bold=True, space_before=0, spa
 
 add_paragraph(right, "AISSCE (Class XII)", bold=True, size=9, space_before=4, space_after=1)
 add_paragraph(right, "Jawahar Navodaya Vidhyalaya, Narsinghpur", size=8, color=MUTED, space_before=0, space_after=1)
-add_paragraph(right, "2008 – 2010", size=8, color=MUTED, space_before=0, space_after=1)
+add_paragraph(right, "2009 – 2010", size=8, color=MUTED, space_before=0, space_after=1)
 add_paragraph(right, "Score: 79.6 / 100", size=8.5, bold=True, space_before=0, space_after=6)
+
+add_paragraph(right, "AISSE (Class X)", bold=True, size=9, space_before=4, space_after=1)
+add_paragraph(right, "Jawahar Navodaya Vidhyalaya, Narsinghpur", size=8, color=MUTED, space_before=0, space_after=1)
+add_paragraph(right, "2007-2008", size=8, color=MUTED, space_before=0, space_after=1)
+add_paragraph(right, "Score: 81.6 / 100", size=8.5, bold=True, space_before=0, space_after=6)
 
 # ────────────────────────────────────────────────────────────
 # RIGHT: Languages
