@@ -4,14 +4,16 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUTPUT_PATH = "VipulKumarTiwari_Resume.docx"
+OUTPUT_PATH = "VipulKumarTiwari_Resume2.docx"
 
 # ── Color palette ─────────────────────────────────────────────────────────────
-ACCENT      = RGBColor(0x21, 0x8B, 0xC2)   # steel blue
+HEADER_BG   = "1B2631"                       # dark navy
+ACCENT      = RGBColor(0x21, 0x8B, 0xC2)    # steel blue
+WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
 NEAR_BLACK  = RGBColor(0x1A, 0x1A, 0x1A)
 MUTED       = RGBColor(0x60, 0x60, 0x60)
-SIDEBAR_BG  = "F2F6FA"           # very light blue-gray for sidebar
-RULE_COLOR  = "218BC2"           # accent as hex
+SIDEBAR_BG  = "F2F6FA"
+RULE_COLOR  = "218BC2"
 
 doc = Document()
 
@@ -21,7 +23,7 @@ for section in doc.sections:
     section.page_height   = Inches(11)
     section.top_margin    = Inches(0)
     section.bottom_margin = Inches(0.4)
-    section.left_margin   = Inches(0)
+    section.left_margin   = Inches(0.4)
     section.right_margin  = Inches(0)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -145,11 +147,11 @@ def set_cell_padding(cell, top=0, bottom=0, left=72, right=72):
 
 
 # ════════════════════════════════════════════════════════════
-# HEADER BANNER  (full-width white table)
+# HEADER BANNER  (full-width dark navy table)
 # ════════════════════════════════════════════════════════════
 hdr_table = doc.add_table(rows=1, cols=1)
 hdr_cell  = hdr_table.cell(0, 0)
-shade_cell(hdr_cell, "FFFFFF")
+shade_cell(hdr_cell, HEADER_BG)
 set_cell_borders_none(hdr_cell)
 set_cell_padding(hdr_cell, top=144, bottom=130, left=720, right=720)
 
@@ -161,7 +163,7 @@ p_name.alignment = WD_ALIGN_PARAGRAPH.CENTER
 p_name.paragraph_format.space_before = Pt(0)
 p_name.paragraph_format.space_after  = Pt(4)
 r = p_name.add_run("VIPUL KUMAR TIWARI")
-r.bold = True; r.font.name = "Calibri"; r.font.size = Pt(24); r.font.color.rgb = NEAR_BLACK
+r.bold = True; r.font.name = "Calibri"; r.font.size = Pt(24); r.font.color.rgb = WHITE
 
 # Title
 p_title = hdr_cell.add_paragraph()
@@ -178,10 +180,10 @@ p_contact.paragraph_format.space_before = Pt(0)
 p_contact.paragraph_format.space_after  = Pt(0)
 contact_text = "+91-8839814859   \u2022   er.vktcs@gmail.com   \u2022   linkedin.com/in/vipulkumartiwari"
 r3 = p_contact.add_run(contact_text)
-r3.font.name = "Calibri"; r3.font.size = Pt(9); r3.font.color.rgb = MUTED
+r3.font.name = "Calibri"; r3.font.size = Pt(9); r3.font.color.rgb = RGBColor(0xCC, 0xDD, 0xEE)
 
 # ════════════════════════════════════════════════════════════
-# SUMMARY  (full-width single column with top border separator)
+# SUMMARY  (full-width single column with separator)
 # ════════════════════════════════════════════════════════════
 sum_table = doc.add_table(rows=1, cols=1)
 sum_cell  = sum_table.cell(0, 0)
@@ -208,8 +210,8 @@ right = body_table.cell(0, 1)
 
 set_cell_borders_none(left)
 set_cell_borders_none(right)
-set_cell_width(left,  5.5)
-set_cell_width(right, 3.0)
+set_cell_width(left,  5.0)
+set_cell_width(right, 3.5)
 set_cell_padding(left,  top=72, bottom=72, left=720, right=360)
 set_cell_padding(right, top=72, bottom=72, left=360, right=576)
 shade_cell(right, SIDEBAR_BG)
@@ -257,10 +259,10 @@ add_bullet(right, "Outstanding Achievement Award at Druva for designing and deve
 add_section_header(right, "Skills", accent=True)
 
 skill_groups = [
-    ("Core",        "System Design · Databases · Storage"),
-    ("Languages",   "C/C++ · Python · Golang"),
-    ("Cloud / Ops", "AWS · Docker · Kubernetes"),
-    ("DB / Storage","DynamoDB · S3"),
+    ("Core",          "System Design · Databases · Storage"),
+    ("Languages",     "C/C++ · Python · Golang"),
+    ("Cloud / Ops",   "AWS · Docker · Kubernetes"),
+    ("DB / Storage",  "DynamoDB · S3"),
     ("CS Foundations","Data Structures · Algorithms"),
 ]
 for label, skills in skill_groups:
