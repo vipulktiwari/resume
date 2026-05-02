@@ -80,13 +80,13 @@ def add_section_header(container, text, accent=False):
     run.font.name = FONT_MAIN
     run.font.size = Pt(10)
     run.font.color.rgb = ACCENT if accent else DARK_NAVY
-    _border_bottom(p, RULE_COLOR if accent else "1B2631", sz="10")
+    _border_bottom(p, RULE_COLOR if accent else "1B2631", sz="6")
     return p
 
 
 def add_bullet(container, text, size=8.5):
     import re
-    p = container.add_paragraph(style='List Bullet')
+    p = container.add_paragraph(style='Normal')
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after  = Pt(2)
     p.paragraph_format.left_indent  = Inches(0.18)
@@ -106,7 +106,7 @@ def add_job_header(container, title, company, date, location):
     p = container.add_paragraph()
     p.paragraph_format.space_before = Pt(6)
     p.paragraph_format.space_after  = Pt(1)
-    p.paragraph_format.tab_stops.add_tab_stop(Inches(4.1), WD_TAB_ALIGNMENT.RIGHT)
+    p.paragraph_format.tab_stops.add_tab_stop(Inches(4.5), WD_TAB_ALIGNMENT.RIGHT)
 
     r_title = p.add_run(title)
     r_title.bold = True
@@ -125,7 +125,7 @@ def add_job_header(container, title, company, date, location):
     p2 = container.add_paragraph()
     p2.paragraph_format.space_before = Pt(0)
     p2.paragraph_format.space_after  = Pt(2)
-    p2.paragraph_format.tab_stops.add_tab_stop(Inches(4.1), WD_TAB_ALIGNMENT.RIGHT)
+    p2.paragraph_format.tab_stops.add_tab_stop(Inches(4.5), WD_TAB_ALIGNMENT.RIGHT)
 
     r_comp = p2.add_run(company)
     r_comp.bold = True
@@ -253,7 +253,7 @@ p_title.paragraph_format.space_after  = Pt(4)
 r2 = p_title.add_run("Principal Member of Technical Staff")
 r2.font.name = FONT_MAIN
 r2.font.size = Pt(12)
-r2.font.color.rgb = ACCENT
+r2.font.color.rgb = DARK_NAVY
 
 # Contact line with separators
 p_contact = hdr_cell.add_paragraph()
@@ -375,7 +375,7 @@ for label, skills in skill_groups:
     rl.bold = True
     rl.font.name = FONT_MAIN
     rl.font.size = Pt(8.5)
-    rl.font.color.rgb = ACCENT
+    rl.font.color.rgb = DARK_NAVY
     rs = p.add_run(skills)
     rs.font.name = FONT_MAIN
     rs.font.size = Pt(8.5)
